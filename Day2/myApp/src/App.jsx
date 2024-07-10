@@ -14,7 +14,9 @@ function App() {
       <View/>
       <Routes>
         <Route path='/' element={<Records/>}></Route>
-        <Route path='/add' element={<Add/>}></Route>
+        <Route path='/add' element={<Add person={{
+          fname:"Swathi",department:"English",semester:"S4"
+        }}/>}></Route>
       </Routes>
     </>
   )
