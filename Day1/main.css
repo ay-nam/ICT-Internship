@@ -1,0 +1,26 @@
+p{
+    color:blueviolet;
+}
+
+a{
+    text-decoration: none;
+    color:brown;
+} 
+
+table,th,td{
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th{
+    color:burlywood;
+}
+
+#id1{
+    background-color: cadetblue;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+img{
+    border-radius: 50%;
+}
