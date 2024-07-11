@@ -5,6 +5,7 @@ import Records from './components/Records';
 import Add from './components/Add';
 import roseImage from './assets/rose.jpg';
 import { Routes,Route } from 'react-router-dom';
+import DemoAxios from './components/DemoAxios';
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
       <h1>Welcome to React Session</h1>
       <View/>
       <Routes>
-        <Route path='/' element={<Records/>}></Route>
+        <Route path='/' element={<DemoAxios/>}></Route>
         <Route path='/add' element={<Add person={{
           fname:"Swathi",department:"English",semester:"S4"
         }}/>}></Route>
