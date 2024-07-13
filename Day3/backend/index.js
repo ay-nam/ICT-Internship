@@ -35,6 +35,17 @@ app.post('/newmovie',async(req,res)=>{
     }
 })
 
+//to update the document
+app.put('/movieupdation/:id',async (req,res)=>{
+    try {
+     const data= await movieModel.findByIdAndUpdate(req.params.id,req.body);
+     res.send('Updated successfully')
+    } catch (error) {
+     console.log(error)
+    }
+ })
+
+
 //delete a document
 app.delete('/movieremoval/:id',async(req,res)=>{
     try{
@@ -46,7 +57,7 @@ app.delete('/movieremoval/:id',async(req,res)=>{
 })
 
 //update a collection
-add.put('/movieedit/:id')
+// add.put('/movieedit/:id')
 //compulsory(for the port to be active all the time)
 app.listen(PORT,()=>{
     console.log("Server is running on PORT 4000")

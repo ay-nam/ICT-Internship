@@ -12,6 +12,7 @@ import aanandamImage from '../assets/Aanandam.jpeg';
 import axios from 'axios';
 import { useState,useEffect } from 'react';
 import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 
 const View = () => {
@@ -24,14 +25,19 @@ const View = () => {
     })
     },[])
 
-    function deleteMovie(p){
-        axios.delete('http://localhost:4000/movieremoval/'+p).then((res)=>{
+    function deleteMovie(_id){
+        axios.delete('http://localhost:4000/movieremoval/'+_id).then((res)=>{
             alert('Data deleted');
             window.location.reload()
         }).catch((error)=>{
             console.log(error)
         })
     }
+    const navigate=useNavigate()
+    function updateMovie(movie) {
+      navigate('/add',{state:{movie}})
+    }
+
     return (
         <div>
             <TableContainer component={Paper}>
@@ -48,7 +54,7 @@ const View = () => {
                     <TableBody>
                         {rows.map((row) => (
                             <TableRow
-                                key={row.name}
+                                key={row._id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell component="th" scope="row">
@@ -60,8 +66,8 @@ const View = () => {
                                 {/* <TableCell align="right">
                                     <img src={row.Image} alt={row.Name} style={{ width: 100, height: 'auto' }} />
                                 </TableCell> */}
-                                <TableCell><Button variant="contained" color='secondary'>Edit</Button></TableCell>
-                                <TableCell><Button variant="contained" color='error' onClick={deleteMovie(row._id)}>Delete</Button></TableCell>
+                                <TableCell><Button variant="contained" color='secondary' onClick={()=>{updateMovie(row)}}>Edit</Button></TableCell>
+                                <TableCell><Button variant="contained" color='error' onClick={() => deleteMovie(row._id)}>Delete</Button></TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
