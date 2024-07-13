@@ -9,32 +9,29 @@ import Paper from '@mui/material/Paper';
 import premamImage from '../assets/Premam.avif';
 import bangloreDaysImage from '../assets/Banglore Days.jpg';
 import aanandamImage from '../assets/Aanandam.jpeg';
+import axios from 'axios';
+import { useState,useEffect } from 'react';
+import { Button } from '@mui/material';
 
-const rows = [
-    {
-        Name: "Premam",
-        Category: "Romantic Drama",
-        Director: "Alphonse Puthren",
-        ReleaseYear: "2015",
-        Image: premamImage
-    },
-    {
-        Name: "Banglore Days",
-        Category: "Romantic Comedy-Drama",
-        Director: "Anjali Menon",
-        ReleaseYear: "2014",
-        Image: bangloreDaysImage
-    },
-    {
-        Name: "Aanandam",
-        Category: "Adventure Comedy-Drama",
-        Director: "Ganesh Raj",
-        ReleaseYear: "2016",
-        Image: aanandamImage
-    },
-];
 
 const View = () => {
+
+    const [rows,setRows]=useState([])
+    useEffect(()=>{
+        axios.get('http://localhost:4000/movies').then((res)=>{
+            console.log(res);
+            setRows(res.data);       
+    })
+    },[])
+
+    function deleteMovie(p){
+        axios.delete('http://localhost:4000/movieremoval/'+p).then((res)=>{
+            alert('Data deleted');
+            window.location.reload()
+        }).catch((error)=>{
+            console.log(error)
+        })
+    }
     return (
         <div>
             <TableContainer component={Paper}>
@@ -42,27 +39,29 @@ const View = () => {
                     <TableHead>
                         <TableRow>
                             <TableCell>Name</TableCell>
-                            <TableCell align="right">Category</TableCell>
-                            <TableCell align="right">Director</TableCell>
-                            <TableCell align="right">Release Year</TableCell>
-                            <TableCell align="right">Image</TableCell>
+                            <TableCell>Category</TableCell>
+                            <TableCell>Director</TableCell>
+                            <TableCell>Release Year</TableCell>
+                            {/* <TableCell align="right">Image</TableCell> */}
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {rows.map((row) => (
                             <TableRow
-                                key={row.Name}
+                                key={row.name}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell component="th" scope="row">
-                                    {row.Name}
+                                    {row.name}
                                 </TableCell>
-                                <TableCell align="right">{row.Category}</TableCell>
-                                <TableCell align="right">{row.Director}</TableCell>
-                                <TableCell align="right">{row.ReleaseYear}</TableCell>
-                                <TableCell align="right">
+                                <TableCell>{row.category}</TableCell>
+                                <TableCell>{row.director}</TableCell>
+                                <TableCell>{row.releaseYear}</TableCell>
+                                {/* <TableCell align="right">
                                     <img src={row.Image} alt={row.Name} style={{ width: 100, height: 'auto' }} />
-                                </TableCell>
+                                </TableCell> */}
+                                <TableCell><Button variant="contained" color='secondary'>Edit</Button></TableCell>
+                                <TableCell><Button variant="contained" color='error' onClick={deleteMovie(row._id)}>Delete</Button></TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
